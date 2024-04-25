@@ -108,7 +108,7 @@ class Trainer:
                     },
                     step=epoch,
                 )
-                print(f"lr: {self.scheduler.get_lr()}")
+                print(f"lr: {self.scheduler.get_lr()[0]}")
                 self.scheduler.step()
 
             val_mean_loss = self._validate()
