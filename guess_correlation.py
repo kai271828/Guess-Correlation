@@ -191,7 +191,7 @@ def main(args):
             optimizer_type=args.optimizer,
             lr=args.learning_rate,
             weight_decay=args.weight_decay,
-            checkpoint=args.load_model_from,
+            checkpoint_path=args.load_model_from,
         )
 
         train_dataloader = DataLoader(
