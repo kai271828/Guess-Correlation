@@ -104,7 +104,7 @@ class Trainer:
             if self.scheduler is not None:
                 wandb.log(
                     {
-                        "learning rate": self.scheduler.get_lr()[0],
+                        "learning rate": float(self.scheduler.get_lr()[0]),
                     },
                     step=epoch,
                 )
