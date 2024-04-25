@@ -116,13 +116,16 @@ def parse_args():
         default=0,
         help="Random seed.",
     )
-    assert parser.optimizer in [
+
+    args = parser.parse_args()
+
+    assert args.optimizer in [
         "sgdm",
         "adam",
         "adamw",
     ], "--optimizer only supports {sgdm, adam, adamw}."
 
-    assert parser.backbone in [
+    assert args.backbone in [
         "resnet18",
         "resnet34",
         "resnet50",
@@ -130,7 +133,7 @@ def parse_args():
         "vit_b_16",
     ], "--optimizer only supports {sgdm, adam, adamw}."
 
-    return parser
+    return args
 
 
 def main(args):
