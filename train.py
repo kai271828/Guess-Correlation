@@ -173,7 +173,7 @@ def main(args):
             val_dataset, batch_size=args.batch_size, shuffle=False
         )
 
-        if args.opimizer == "sgdm":
+        if args.optimizer == "sgdm":
 
             optimizer = optim.SGD(
                 model.parameters(),
@@ -181,7 +181,7 @@ def main(args):
                 lr=args.learning_rate,
                 weight_decay=args.weight_decay,
             )
-        elif args.opimizer == "adam":
+        elif args.optimizer == "adam":
             optimizer = optim.Adam(
                 model.parameters(),
                 lr=args.learning_rate,
