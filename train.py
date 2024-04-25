@@ -18,6 +18,7 @@ from torchvision.transforms import v2
 
 from CorrelationDataset import CorrelationDataset
 from Trainer import Trainer
+from utils import get_model
 
 
 def parse_args():
