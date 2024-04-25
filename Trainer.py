@@ -3,6 +3,12 @@ import torch
 import wandb
 import numpy as np
 from tqdm.auto import tqdm
+from sklearn.metrics import (
+    root_mean_squared_error,
+    mean_squared_error,
+    mean_absolute_error,
+    r2_score,
+)
 
 
 class Trainer:
@@ -11,6 +17,7 @@ class Trainer:
         model,
         train_loader,
         val_loader,
+        test_loader,
         criterion,
         optimizer,
         scheduler,
@@ -21,6 +28,7 @@ class Trainer:
         self.model = model
         self.train_loader = train_loader
         self.val_loader = val_loader
+        self.test_loader = test_loader
         self.criterion = criterion
         self.optimizer = optimizer
         self.scheduler = scheduler
@@ -128,5 +136,26 @@ class Trainer:
         torch.save(self.model.state_dict(), os.path.join(self.save_path, "last.pt"))
 
     @torch.no_grad()
-    def eval(self, test_loader=None, metrics=None):
-        pass
+    def eval(self):
+        self.model.eval()
+        output_record = []
+        label_record = []
+
+        for images, labels in tqdm(self.test_loader):
+
+            images, labels = images.to(self.device), labels.to(self.device)
+
+            outputs = self.model(images)
+
+            loss = self.criterion(outputs, labels)
+
+            output_record.extend(outputs.tolist())
+
+            lable_record.extend(labels.tolist())
+
+        rmse = root_mean_squared_error(label_record, output_record)
+        mse = mean_squared_error(label_record, output_record)
+        mae = mean_absolute_error((label_record, output_record))
+        r2 = r2_score(label_record, output_record)
+
+        return rmse, mse, mae, r2
