@@ -116,13 +116,13 @@ def parse_args():
         default=0,
         help="Random seed.",
     )
-    add_argument(
+    parser.add_argument(
         "--do_train",
         type=bool,
         default=True,
         help="Whether to evaluate the model.",
     )
-    add_argument(
+    parser.add_argument(
         "--do_eval",
         type=bool,
         default=True,
