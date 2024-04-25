@@ -161,6 +161,8 @@ def main():
     train_dataset = CorrelationDataset(train_df, args.image_dir, transforms)
     val_dataset = CorrelationDataset(val_df, args.image_dir, transforms)
 
+    print(train_dataset[0])
+
     with wandb.init(
         project=args.project_name, name=configargs.run_name, config=vars(args)
     ):
