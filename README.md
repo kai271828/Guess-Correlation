@@ -93,12 +93,12 @@ Install packages through pip.
 ## Usage
 Here is an example:
 ```sh
-python train.py \
+python guess_correlation.py \
     --annotation_file "" \
     --image_dir "" \
     --test_ratio 0.2 \
     --resize_to 150 \
-    --backbone "vit_b_16" \
+    --backbone "resnet18" \
     --use_tanh True \
     --batch_size 128 \
     --optimizer "adamw" \
@@ -109,7 +109,9 @@ python train.py \
     --output_dir "" \
     --project_name "Guess Correlation" \
     --run_name "vit_b_16_baseline" \
-    --seed 9527
+    --seed 9527 \
+    --do_train True \
+    --do_eval True
 ```
 
 
