@@ -110,7 +110,7 @@ class Trainer:
             if val_mean_loss < self.best_loss:
                 self.best_loss = val_mean_loss
                 no_improve = 0
-                printf(f"Saving the model with val loss {val_mean_loss}")
+                print(f"Saving the model with val loss {val_mean_loss}")
                 torch.save(
                     self.model.state_dict(), os.path.join(self.save_path, "best.pt")
                 )
