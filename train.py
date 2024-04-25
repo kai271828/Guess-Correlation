@@ -15,7 +15,6 @@ from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision
 from torchvision.transforms import v2
-from torchvision.io import read_image
 
 from CorrelationDataset import CorrelationDataset
 from Trainer import Trainer

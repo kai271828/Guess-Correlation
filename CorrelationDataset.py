@@ -1,5 +1,6 @@
 import os
 from torch.utils.data import Dataset
+from torchvision.io import read_image
 
 
 class CorrelationDataset(Dataset):
