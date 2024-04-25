@@ -171,7 +171,7 @@ class Trainer:
 
         mse = mean_squared_error(label_record, output_record)
         rmse = np.sqrt(mse)
-        mae = mean_absolute_error((label_record, output_record))
+        mae = mean_absolute_error(label_record, output_record)
         r2 = r2_score(label_record, output_record)
 
         return rmse, mse, mae, r2
