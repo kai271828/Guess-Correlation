@@ -1,0 +1,8 @@
+wandb
+numpy
+pandas
+matplotlib
+sklearn
+tqdm
+torch
+torchvision
