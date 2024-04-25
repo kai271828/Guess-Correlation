@@ -1,3 +1,6 @@
+from tqdm.auto import tqdm
+
+
 class Trainer:
     def __init__(
         self,
