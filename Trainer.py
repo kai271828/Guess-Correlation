@@ -4,7 +4,6 @@ import wandb
 import numpy as np
 from tqdm.auto import tqdm
 from sklearn.metrics import (
-    root_mean_squared_error,
     mean_squared_error,
     mean_absolute_error,
     r2_score,
@@ -153,8 +152,8 @@ class Trainer:
 
             lable_record.extend(labels.tolist())
 
-        rmse = root_mean_squared_error(label_record, output_record)
         mse = mean_squared_error(label_record, output_record)
+        rmse = np.sqrt(mse)
         mae = mean_absolute_error((label_record, output_record))
         r2 = r2_score(label_record, output_record)
 
