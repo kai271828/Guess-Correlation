@@ -110,8 +110,6 @@ python train.py \
     --project_name "Guess Correlation" \
     --run_name "vit_b_16_baseline" \
     --seed 9527
-
-
 ```
 
 
