@@ -20,7 +20,7 @@ def get_model_optimizer(
     optimizer_type="sgdm",
     lr=1e-3,
     weight_decay=1e-2,
-    checkpoint=None,
+    checkpoint_path=None,
 ):
     if backbone.startswith("resnet"):
         if backbone == "resnet18":
@@ -72,7 +72,8 @@ def get_model_optimizer(
             weight_decay=weight_decay,
         )
 
-    if checkpoint is not None:
+    if checkpoint_path is not None:
+        checkpoint = torch.load(checkpoint_path)
         model.load_state_dict(checkpoint["model_state_dict"])
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
 
