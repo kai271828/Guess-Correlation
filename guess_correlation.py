@@ -212,7 +212,7 @@ def main(args):
             criterion=nn.MSELoss(reduction="mean"),
             optimizer=optimizer,
             scheduler=lr_scheduler.CosineAnnealingLR(
-                optimizer, T_max=args.num_epoch, eat_min=0
+                optimizer, T_max=args.num_epoch, eta_min=0
             ),  # lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1),
             device="cuda" if torch.cuda.is_available() else "cpu",
             tolerance=args.tolerance,
