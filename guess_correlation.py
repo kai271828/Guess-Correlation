@@ -189,6 +189,8 @@ def main(args):
             backbone=args.backbone,
             use_tanh=args.use_tanh,
             optimizer_type=args.optimizer,
+            lr=args.learning_rate,
+            weight_decay=args.weight_decay,
             checkpoint=args.load_model_from,
         )
 
