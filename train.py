@@ -136,6 +136,8 @@ def parse_args():
 def main():
     args = parse_args()
 
+    print(var(args))
+
     # Reproduct
     torch.backends.cudnn.deterministic = True
     random.seed(args.seed)
