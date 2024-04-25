@@ -204,7 +204,7 @@ def main():
             scheduler=None,  # lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1),
             device="cuda" if torch.cuda.is_available() else "cpu",
             tolerance=args.tolerance,
-            save_path="/kaggle/working/",
+            save_path=args.output_dir,
         )
 
         trainer.train(num_epoch=args.num_epoch)
