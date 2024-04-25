@@ -120,7 +120,11 @@ class Trainer:
                 no_improve = 0
                 print(f"Saving the model with val loss {val_mean_loss}")
                 torch.save(
-                    self.model.state_dict(), os.path.join(self.save_path, "best.pt")
+                    {
+                        "model_state_dict": self.model.state_dict(),
+                        "optimizer_state_dict": self.optimizer.state_dict(),
+                    },
+                    os.path.join(self.save_path, "best.pt"),
                 )
             else:
                 no_improve += 1
@@ -132,7 +136,13 @@ class Trainer:
                 print(f"The best val loss is {val_mean_loss}")
                 break
 
-        torch.save(self.model.state_dict(), os.path.join(self.save_path, "last.pt"))
+            torch.save(
+                {
+                    "model_state_dict": self.model.state_dict(),
+                    "optimizer_state_dict": self.optimizer.state_dict(),
+                },
+                os.path.join(self.save_path, "last.pt"),
+            )
 
     @torch.no_grad()
     def eval(self):

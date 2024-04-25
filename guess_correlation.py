@@ -17,7 +17,7 @@ from torchvision.transforms import v2
 
 from CorrelationDataset import CorrelationDataset
 from Trainer import Trainer
-from models import get_model
+from models import get_model_optimizer
 
 
 def parse_args():
@@ -57,6 +57,12 @@ def parse_args():
         type=bool,
         default=True,
         help="Whether to use tanh activation as the final layer of the whole model.",
+    )
+    parser.add_argument(
+        "--load_model_from",
+        type=str,
+        default=None,
+        help="Load a model to evaluate or resume training.",
     )
     parser.add_argument(
         "--batch_size",
@@ -180,7 +186,12 @@ def main(args):
 
     with wandb.init(project=args.project_name, name=args.run_name, config=vars(args)):
 
-        model = get_model(backbone=args.backbone, use_tanh=args.use_tanh)
+        model = get_model_optimizer(
+            backbone=args.backbone,
+            use_tanh=args.use_tanh,
+            optimizer_type=args.optimizer,
+            checkpoint=args.load_model_from,
+        )
 
         train_dataloader = DataLoader(
             train_dataset, batch_size=args.batch_size, shuffle=True
@@ -191,27 +202,6 @@ def main(args):
         test_dataloader = DataLoader(
             test_dataset, batch_size=args.batch_size, shuffle=False
         )
-
-        if args.optimizer == "sgdm":
-
-            optimizer = optim.SGD(
-                model.parameters(),
-                momentum=0.9,
-                lr=args.learning_rate,
-                weight_decay=args.weight_decay,
-            )
-        elif args.optimizer == "adam":
-            optimizer = optim.Adam(
-                model.parameters(),
-                lr=args.learning_rate,
-                weight_decay=args.weight_decay,
-            )
-        else:
-            optimizer = optim.AdamW(
-                model.parameters(),
-                lr=args.learning_rate,
-                weight_decay=args.weight_decay,
-            )
 
         trainer = Trainer(
             model=model,

@@ -13,7 +13,9 @@ from torchvision.models import (
 )
 
 
-def get_model(backbone="resnet18", use_tanh=True):
+def get_model_optimizer(
+    backbone="resnet18", use_tanh=True, optimizer_type="sgdm", checkpoint=None
+):
     if backbone.startswith("resnet"):
         if backbone == "resnet18":
             model = resnet18(weights=ResNet18_Weights.DEFAULT)
@@ -44,4 +46,28 @@ def get_model(backbone="resnet18", use_tanh=True):
             else nn.Linear(in_features=num_in, out_features=1, bias=True)
         )
 
-    return model
+    if optimizer_type == "sgdm":
+        optimizer = optim.SGD(
+            model.parameters(),
+            momentum=0.9,
+            lr=args.learning_rate,
+            weight_decay=args.weight_decay,
+        )
+    elif optimizer_type == "adam":
+        optimizer = optim.Adam(
+            model.parameters(),
+            lr=args.learning_rate,
+            weight_decay=args.weight_decay,
+        )
+    else:
+        optimizer = optim.AdamW(
+            model.parameters(),
+            lr=args.learning_rate,
+            weight_decay=args.weight_decay,
+        )
+
+    if checkpoint is not None:
+        model.load_state_dict(checkpoint["model_state_dict"])
+        optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+
+    return model, optimizer
