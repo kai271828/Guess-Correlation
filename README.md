@@ -94,21 +94,22 @@ Install packages through pip.
 Here is an example:
 ```sh
 python guess_correlation.py \
-    --annotation_file "" \
-    --image_dir "" \
+    --annotation_file "responses.csv" \
+    --image_dir "images" \
     --test_ratio 0.2 \
     --resize_to 150 \
     --backbone "resnet18" \
     --use_tanh True \
-    --batch_size 128 \
-    --optimizer "adamw" \
+    --load_model_from "checkpoints/resnet18/last.pt" \
+    --batch_size 256 \
+    --optimizer "sgdm" \
     --learning_rate 1e-3 \
     --weight_decay 0.1 \
-    --num_epoch 50 \
+    --num_epoch 1 \
     --tolerance 5 \
-    --output_dir "" \
+    --output_dir "output/resnet18" \
     --project_name "Guess Correlation" \
-    --run_name "vit_b_16_baseline" \
+    --run_name "resnet18_baseline" \
     --seed 9527 \
     --do_train True \
     --do_eval True
