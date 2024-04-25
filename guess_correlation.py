@@ -9,7 +9,6 @@ from tqdm.auto import tqdm
 from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
-import torch.optim as optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 import torchvision

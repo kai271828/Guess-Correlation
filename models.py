@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch.optim as optim
 from torchvision.models import (
     resnet18,
     ResNet18_Weights,
