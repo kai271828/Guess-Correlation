@@ -161,11 +161,7 @@ def main(args):
     train_dataset = CorrelationDataset(train_df, args.image_dir, transforms)
     val_dataset = CorrelationDataset(val_df, args.image_dir, transforms)
 
-    print(train_dataset[0])
-
-    with wandb.init(
-        project=args.project_name, name=configargs.run_name, config=vars(args)
-    ):
+    with wandb.init(project=args.project_name, name=args.run_name, config=vars(args)):
 
         model = get_model(backbone=args.backbone, use_tanh=args.use_tanh)
 
