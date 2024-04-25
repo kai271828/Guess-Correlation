@@ -2,7 +2,7 @@ wandb
 numpy
 pandas
 matplotlib
-sklearn
+scikit-learn
 tqdm
 torch
 torchvision
