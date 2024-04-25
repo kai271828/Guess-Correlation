@@ -208,3 +208,5 @@ def main():
         )
 
         trainer.train(num_epoch=args.num_epoch)
+
+    print("exit")
