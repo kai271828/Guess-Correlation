@@ -1,3 +1,4 @@
+import os
 import torch
 import wandb
 import numpy as np
@@ -119,7 +120,7 @@ class Trainer:
 
             if no_improve >= self.tolerance:
                 print(
-                    f"No improvement after {self.early_stop} epochs, so stop training."
+                    f"No improvement after {self.tolerance} epochs, so stop training."
                 )
                 print(f"The best val loss is {val_mean_loss}")
                 break
