@@ -73,6 +73,7 @@ def get_model_optimizer(
         )
 
     if checkpoint is not None:
+        print(checkpoint)
         model.load_state_dict(checkpoint["model_state_dict"])
         optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
 
