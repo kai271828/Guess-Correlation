@@ -5,9 +5,8 @@ import wandb
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from tqdm.auto import tqdm
+from sklearn.model_selection import train_test_split
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -159,8 +158,12 @@ def main(args):
     # Read & Prepare Data
     df = pd.read_csv(args.annotation_file)
 
+    trainval_df, test_df = train_test_split(
+        df, test_size=args.test_ratio if args.do_eval else 0, random_state=args.seed
+    )
+
     train_df, val_df = train_test_split(
-        df, test_size=args.test_ratio, random_state=args.seed
+        trainval_df, test_size=0.2, random_state=args.seed
     )
 
     transforms = v2.Compose(
@@ -173,6 +176,7 @@ def main(args):
 
     train_dataset = CorrelationDataset(train_df, args.image_dir, transforms)
     val_dataset = CorrelationDataset(val_df, args.image_dir, transforms)
+    test_dataset = CorrelationDataset(test_df, args.image_dir, transforms)
 
     with wandb.init(project=args.project_name, name=args.run_name, config=vars(args)):
 
@@ -183,6 +187,9 @@ def main(args):
         )
         val_dataloader = DataLoader(
             val_dataset, batch_size=args.batch_size, shuffle=False
+        )
+        test_dataloader = DataLoader(
+            test_dataset, batch_size=args.batch_size, shuffle=False
         )
 
         if args.optimizer == "sgdm":
@@ -210,6 +217,7 @@ def main(args):
             model=model,
             train_loader=train_dataloader,
             val_loader=val_dataloader,
+            test_loader=test_dataloader,
             criterion=nn.MSELoss(reduction="mean"),
             optimizer=optimizer,
             scheduler=None,  # lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1),
@@ -222,9 +230,12 @@ def main(args):
             trainer.train(num_epoch=args.num_epoch)
 
         if args.do_eval:
-            trainer.eval()
-
-    print("exit")
+            rmse, mse, mae, r2 = trainer.eval()
+            print(f"The evaluation result on testing set:")
+            print(f"RMSE: {rmse}")
+            print(f"MSE: {mse}")
+            print(f"MAE: {mae}")
+            print(f"R2 Score: {r2}")
 
 
 if __name__ == "__main__":
