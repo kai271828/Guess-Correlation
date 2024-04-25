@@ -16,21 +16,13 @@ from torchvision.models import (
 def get_model(backbone="resnet18", use_tanh=True):
     if backbone.startswith("resnet"):
         if backbone == "resnet18":
-            model = torchvision.models.resnet18(
-                weights=torchvision.models.ResNet18_Weights.DEFAULT
-            )
+            model = resnet18(weights=ResNet18_Weights.DEFAULT)
         elif backbone == "resnet34":
-            model = torchvision.models.resnet34(
-                weights=torchvision.models.ResNet34_Weights.DEFAULT
-            )
+            model = resnet34(weights=ResNet34_Weights.DEFAULT)
         elif backbone == "resnet50":
-            model = torchvision.models.resnet50(
-                weights=torchvision.models.ResNet50_Weights.DEFAULT
-            )
+            model = resnet50(weights=ResNet50_Weights.DEFAULT)
         else:
-            model = torchvision.models.resnet101(
-                weights=torchvision.models.ResNet101_Weights.DEFAULT
-            )
+            model = resnet101(weights=ResNet101_Weights.DEFAULT)
 
         num_in = model.fc.in_features
         model.fc = (
@@ -41,9 +33,7 @@ def get_model(backbone="resnet18", use_tanh=True):
             else nn.Linear(in_features=num_in, out_features=1, bias=True)
         )
     else:
-        model = torchvision.models.vit_b_16(
-            weights=torchvision.models.ViT_B_16_Weights.DEFAULT
-        )
+        model = vit_b_16(weights=ViT_B_16_Weights.DEFAULT)
 
         num_in = model.heads.head.in_features
         model.heads = (
