@@ -133,11 +133,7 @@ def parse_args():
     return parser
 
 
-def main():
-    args = parse_args()
-
-    print(var(args))
-
+def main(args):
     # Reproduct
     torch.backends.cudnn.deterministic = True
     random.seed(args.seed)
@@ -214,3 +210,8 @@ def main():
         trainer.train(num_epoch=args.num_epoch)
 
     print("exit")
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    main(args)
