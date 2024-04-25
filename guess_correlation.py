@@ -185,7 +185,6 @@ def main(args):
 
     with wandb.init(project=args.project_name, name=args.run_name, config=vars(args)):
 
-        print(args.load_model_from)
         model, optimizer = get_model_optimizer(
             backbone=args.backbone,
             use_tanh=args.use_tanh,
