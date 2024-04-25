@@ -109,7 +109,7 @@ python train.py \
     --output_dir "" \
     --project_name "Guess Correlation" \
     --run_name "vit_b_16_baseline" \
-    --seed 9527 \
+    --seed 9527
 
 
 ```
