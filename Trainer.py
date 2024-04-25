@@ -57,9 +57,6 @@ class Trainer:
             loss.backward()
             self.optimizer.step()
 
-            if self.scheduler is not None:
-                self.scheduler.step()
-
             loss_record.append(loss.detach().item())
 
             p_bar.set_postfix({"loss": loss.detach().item()})
@@ -102,7 +99,16 @@ class Trainer:
 
         for epoch in range(num_epoch):
             print(f"Epoch [{epoch + 1}/{num_epoch}]")
+
             train_mean_loss = self._train_one_epoch()
+            if self.scheduler is not None:
+                wandb.log(
+                    {
+                        "learning rate": self.scheduler.get_lr(),
+                    },
+                    step=epoch,
+                )
+                self.scheduler.step()
 
             val_mean_loss = self._validate()
 
@@ -129,13 +135,6 @@ class Trainer:
             else:
                 no_improve += 1
 
-            if no_improve >= self.tolerance:
-                print(
-                    f"No improvement after {self.tolerance} epochs, so stop training."
-                )
-                print(f"The best val loss is {val_mean_loss}")
-                break
-
             torch.save(
                 {
                     "model_state_dict": self.model.state_dict(),
@@ -143,6 +142,13 @@ class Trainer:
                 },
                 os.path.join(self.save_path, "last.pt"),
             )
+
+            if no_improve >= self.tolerance:
+                print(
+                    f"No improvement after {self.tolerance} epochs, so stop training."
+                )
+                print(f"The best val loss is {val_mean_loss}")
+                break
 
     @torch.no_grad()
     def eval(self):
@@ -160,7 +166,7 @@ class Trainer:
 
             output_record.extend(outputs.tolist())
 
-            lable_record.extend(labels.tolist())
+            label_record.extend(labels.tolist())
 
         mse = mean_squared_error(label_record, output_record)
         rmse = np.sqrt(mse)
