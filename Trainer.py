@@ -74,7 +74,7 @@ class Trainer:
 
             images, labels = images.to(self.device), labels.to(self.device)
 
-            outputs = model(images)
+            outputs = self.model(images)
 
             loss = self.criterion(outputs, labels)
 
@@ -127,5 +127,5 @@ class Trainer:
         torch.save(self.model.state_dict(), os.path.join(self.save_path, "last.pt"))
 
     @torch.no_grad()
-    def inference(self, test_loader, metrics):
+    def eval(self, test_loader=None, metrics=None):
         pass

@@ -116,6 +116,18 @@ def parse_args():
         default=0,
         help="Random seed.",
     )
+    add_argument(
+        "--do_train",
+        type=bool,
+        default=True,
+        help="Whether to evaluate the model.",
+    )
+    add_argument(
+        "--do_eval",
+        type=bool,
+        default=True,
+        help="Whether to evaluate the model.",
+    )
 
     args = parser.parse_args()
 
@@ -206,7 +218,11 @@ def main(args):
             save_path=args.output_dir,
         )
 
-        trainer.train(num_epoch=args.num_epoch)
+        if args.do_train:
+            trainer.train(num_epoch=args.num_epoch)
+
+        if args.do_eval:
+            trainer.eval()
 
     print("exit")
 
