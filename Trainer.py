@@ -97,6 +97,8 @@ class Trainer:
         wandb.watch(self.model, self.criterion, log="all", log_freq=10)
         no_improve = 0
 
+        self.model.to(self.device)
+
         for epoch in range(num_epoch):
             print(f"Epoch [{epoch + 1}/{num_epoch}]")
 
@@ -156,6 +158,8 @@ class Trainer:
         self.model.eval()
         output_record = []
         label_record = []
+
+        self.model.to(self.device)
 
         for images, labels in tqdm(self.test_loader):
 
