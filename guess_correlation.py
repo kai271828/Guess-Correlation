@@ -223,9 +223,12 @@ def main(args):
             trainer.train(num_epoch=args.num_epoch)
 
         if args.do_eval:
-            model.load_state_dict(
-                torch.load(os.path.join(args.output_dir, "best.pt"))["model_state_dict"]
-            )
+            # trainer.model.load_state_dict(
+            #     torch.load(os.path.join(args.output_dir, "best.pt"))["model_state_dict"]
+            # )
+
+            trainer.model.
+
             rmse, mse, mae, r2 = trainer.eval()
             print(f"The evaluation result on testing set:")
             print(f"RMSE: {rmse}")
