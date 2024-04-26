@@ -227,8 +227,6 @@ def main(args):
             #     torch.load(os.path.join(args.output_dir, "best.pt"))["model_state_dict"]
             # )
 
-            trainer.model.
-
             rmse, mse, mae, r2 = trainer.eval()
             print(f"The evaluation result on testing set:")
             print(f"RMSE: {rmse}")
