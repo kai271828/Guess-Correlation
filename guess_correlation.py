@@ -124,7 +124,7 @@ def parse_args():
         "--do_train",
         type=bool,
         default=True,
-        help="Whether to evaluate the model.",
+        help="Whether to train the model.",
     )
     parser.add_argument(
         "--do_eval",
