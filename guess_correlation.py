@@ -219,6 +219,9 @@ def main(args):
             save_path=args.output_dir,
         )
 
+        print(f"train:{args.do_train}")
+        print(f"eval:{args.do_eval}")
+
         if args.do_train:
             trainer.train(num_epoch=args.num_epoch)
 
